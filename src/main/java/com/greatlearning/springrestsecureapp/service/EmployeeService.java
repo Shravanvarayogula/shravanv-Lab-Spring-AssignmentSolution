@@ -10,6 +10,8 @@ public interface EmployeeService {
 
 	public List<Employee> findAll();
 	
+	public List<User> listAllUsers();
+
 	public Employee findById(int theId);
 	
 	public void save(Employee theEmployee);
@@ -21,9 +23,16 @@ public interface EmployeeService {
 	public List<Employee> sortByFirstName(String order);
 	
 	public User saveUser(User user);
+	
 	public Role saveRole(Role role);
 
 	public User getUserById(int id);
+	
+	public void deleteAllUsers();
+
+	void deleteAllEmployees();
+
+	
 
 }
 

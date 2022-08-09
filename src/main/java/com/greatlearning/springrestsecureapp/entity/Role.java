@@ -23,7 +23,6 @@ public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "role_id")
-
 	private int id;
 
 	@Column(name = "rolename")
@@ -34,9 +33,5 @@ public class Role {
 	}
 	public int getRoleId(String rolename) {
 		return this.getId();
-	}
-
-	public void setToUser(User user) {
-		user.addRole(this);
 	}
 }

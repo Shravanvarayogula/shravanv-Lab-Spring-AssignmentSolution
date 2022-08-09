@@ -1,5 +1,8 @@
 package com.greatlearning.springrestsecureapp.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,13 +18,11 @@ public class UserDetailsSpringServiceImpl implements UserDetailsService {
 	private UserRepository userRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.getUserByUsername(username);
-
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		User user = userRepository.getUserByEmail(email);
 		if (user == null) {
 			throw new UsernameNotFoundException("Could not find user");
 		}
-
 		return new AppUserDetails(user);
 	}
 }

@@ -3,7 +3,6 @@ package com.greatlearning.springrestsecureapp.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,14 +20,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "users")
 public class User {
 
 	@Id
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
@@ -45,35 +45,7 @@ public class User {
 	@Column(name = "password")
 	private String password;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER) // cascade = CascadeType.ALL,
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private List<Role> rolename ;
-
-	public void addRole(Role role) {
-		if (this.rolename == null) {
-			this.rolename = new ArrayList<>();
-		}
-		this.rolename.add(role);
-		role.setToUser(this);
-	}
-
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return this.email;
-	}
-
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return this.password;
-	}
-
-	public List<Role> getRolename() {
-		// TODO Auto-generated method stub
-		return this.rolename;
-	}
-
-	public void setPassword(String encode) {
-		this.password = encode;
-
-	}
+	private List<Role> rolename = new ArrayList<Role>();
 }

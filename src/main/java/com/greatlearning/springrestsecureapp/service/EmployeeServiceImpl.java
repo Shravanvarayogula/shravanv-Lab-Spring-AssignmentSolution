@@ -17,26 +17,21 @@ import com.greatlearning.springrestsecureapp.repository.UserRepository;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-	
+
 	private final EmployeeRepository employeeRepository;
 
-
-	@Autowired
 	public EmployeeServiceImpl(EmployeeRepository theEmployeeRepository) {
 		employeeRepository = theEmployeeRepository;
 	}
-	
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
 	@Autowired
 	BCryptPasswordEncoder bcryptEncoder;
-
-
 
 	@SuppressWarnings("deprecation")
 	public User getUserById(int id) {
@@ -46,17 +41,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee findById(int theId) {
 		Optional<Employee> result = employeeRepository.findById(theId);
-		
+
 		Employee theEmployee = null;
-		
+
 		if (result.isPresent()) {
 			theEmployee = result.get();
-		}
-		else {
+		} else {
 			// we didn't find the employee
 			throw new RuntimeException("No Employee Found with - " + theId);
 		}
-		
 		return theEmployee;
 	}
 
@@ -79,8 +72,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<Employee> sortByFirstName(String order) {
 		// TODO Auto-generated method stub
-		
-		if(order.equals("desc"))
+
+		if (order.equals("desc"))
 			return employeeRepository.findAllByOrderByFirstNameDesc();
 		else
 			return employeeRepository.findAllByOrderByFirstNameAsc();
@@ -88,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public User saveUser(User user) {
-		// TODO Auto-generated method stub
+		// TODO Add validation for checking duplicating users with same email
 		user.setPassword(bcryptEncoder.encode(user.getPassword()));
 		return userRepository.save(user);
 	}
@@ -105,5 +98,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.findAll();
 	}
 
-	
+	@Override
+	public List<User> listAllUsers() {
+		// TODO Auto-generated method stub
+		return userRepository.findAll();
+	}
+
+	@Override
+	public void deleteAllUsers() {
+		userRepository.deleteAll();
+	}
+
+	@Override
+	public void deleteAllEmployees() {
+		employeeRepository.deleteAll();
+	}
 }

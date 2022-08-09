@@ -19,7 +19,6 @@ public class SpringRestSecurityAppDesignApplication implements CommandLineRunner
 	@Override
 	public void run(String... args) throws Exception {
 		log.info("Application is Up and Running");
-		
-	}
 
+	}
 }

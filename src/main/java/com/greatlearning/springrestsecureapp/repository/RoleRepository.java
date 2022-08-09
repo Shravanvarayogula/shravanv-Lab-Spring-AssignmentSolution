@@ -14,5 +14,7 @@ import com.greatlearning.springrestsecureapp.entity.User;
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 
 	List<Role> findBy(User user, PageRequest firstPageWithTwoElements);
+	
+	
 
 }

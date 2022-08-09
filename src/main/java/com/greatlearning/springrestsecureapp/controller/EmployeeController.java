@@ -31,6 +31,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 
+	
 	@Autowired
 	public EmployeeController(EmployeeService employeeService) {
 		this.employeeService = employeeService;
@@ -43,7 +44,33 @@ public class EmployeeController {
 		System.out.println(currentPrincipalName);
 		return employeeService.findAll();
 	}
+	
+	@GetMapping("/listAppUsers")
+	public List<User> getAllUsers(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		System.out.println(currentPrincipalName);
+		return employeeService.listAllUsers();
 
+	}
+	
+	@GetMapping("/purgeEmployees")
+	public void deleteAllEmployeeInfo(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		System.out.println(currentPrincipalName);
+		employeeService.deleteAllEmployees();
+
+	}
+
+	@GetMapping("/purgeUsers")
+	public void deleteAllAppUserInfo(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> currentPrincipalName = authentication.getAuthorities();
+		System.out.println(currentPrincipalName);
+		employeeService.deleteAllUsers();
+
+	}
 	@PostMapping("/role")
 	public Role saveRole(@RequestBody Role role) {
 		return employeeService.saveRole(role);
@@ -104,7 +131,6 @@ public class EmployeeController {
 
 	@GetMapping("/employees/sort")
 	public List<Employee> sortByFirstName(@RequestParam(name = "order") String order) {
-
 		return employeeService.sortByFirstName(order);
 	}
 
